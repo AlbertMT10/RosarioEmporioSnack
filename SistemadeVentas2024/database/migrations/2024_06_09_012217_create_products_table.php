@@ -13,6 +13,12 @@ return new class extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
+            $table->string('name'); // Nombre del producto
+            $table->text('description')->nullable(); // Descripción del producto (opcional)
+            $table->decimal('price', 10, 2); // Precio del producto (máximo 10 dígitos, 2 decimales)
+            $table->integer('stock')->unsigned()->default(0); // Stock disponible del producto
+            $table->unsignedBigInteger('category_id');
+            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
             $table->timestamps();
         });
     }

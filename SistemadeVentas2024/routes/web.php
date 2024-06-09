@@ -2,6 +2,7 @@
 
 use App\Livewire\CategoryMain;
 use App\Livewire\Dashboard\Main;
+use App\Livewire\ProductMain;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -15,4 +16,5 @@ Route::middleware([
 ])->group(function () {
     Route::get('/dashboard',Main::class)->name('dashboard');
     Route::get('/categorias', CategoryMain ::class)->name('categorias');
+    Route::get('/productos', ProductMain ::class)->name('productos');
 });

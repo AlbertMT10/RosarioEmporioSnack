@@ -9,4 +9,12 @@ class Category extends Model
 {
     protected $guarded=['id'];
     use HasFactory;
+
+
+    // Define la relación con el modelo History
+    public function products()
+    {
+        return $this->hasMany(Product::class);
+    }
 }
+

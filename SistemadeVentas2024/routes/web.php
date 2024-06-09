@@ -16,5 +16,5 @@ Route::middleware([
 ])->group(function () {
     Route::get('/dashboard',Main::class)->name('dashboard');
     Route::get('/categorias', CategoryMain ::class)->name('categorias');
-    Route::get('/productos', ProductMain ::class)->name('productos');
+    Route::get('/almacen', ProductMain ::class)->name('almacen');
 });

@@ -30,8 +30,8 @@
                 <span class="mx-3">Categorias</span>
             </x-nav-sidebar>
 
-            <x-nav-sidebar :active="request()->routeIs('categorias')" class="flex items-center px-6 py-2 mt-4 text-gray-400 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100"
-                href="{{ route('categorias') }}">
+            <x-nav-sidebar :active="request()->routeIs('almacen')" class="flex items-center px-6 py-2 mt-4 text-gray-400 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100"
+                href="{{ route('almacen') }}">
                 <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                     stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -67,7 +67,7 @@
                 </path>
             </svg>
 
-            <span class="mx-3">Productos</span>
+            <span class="mx-3">Carrito</span>
         </a>
 
         <a class="flex items-center px-6 py-2 mt-4 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100"

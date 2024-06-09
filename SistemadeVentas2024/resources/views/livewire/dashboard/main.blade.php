@@ -30,8 +30,8 @@
                     </div>
 
                     <div class="mx-5">
-                        <h4 class="text-2xl font-semibold text-gray-700">1245</h4>
-                        <div class="text-gray-500">Proveedores</div>
+                        <h4 class="text-2xl font-semibold text-gray-700">xx</h4>
+                        <div class="text-gray-500">productos</div>
                     </div>
                 </div>
             </div>
@@ -54,9 +54,13 @@
                     </div>
 
                     <div class="mx-5">
-                        <h4 class="text-2xl font-semibold text-gray-700">451</h4>
+                        @foreach($categorias as $item)
+                        <h4 class="text-2xl font-semibold text-gray-700">{{$item->name}}</h4>
                         <div class="text-gray-500">Total compras</div>
+                        @endforeach
                     </div>
+
+
                 </div>
             </div>
 

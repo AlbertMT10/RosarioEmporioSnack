@@ -11,46 +11,52 @@ use WireUi\Traits\Actions;
 
 class ProductMain extends Component
 {
-
     use WithPagination;
     use Actions;
-    public $isOpen=false;
-    public $position_id;
+
+    public $isOpen = false;
     public ?Product $product;
     public ProductForm $form;
     public $search;
 
-    public function render(){
-        $productos=Product::where('name','LIKE','%'.$this->search.'%')->latest('id')->paginate(10);
-        $categorias=Category::all();
-        return view('livewire.product-main',compact('productos','categorias'));
+    public function render()
+    {
+        $productos = Product::where('name', 'LIKE', '%' . $this->search . '%')
+                    ->orWhereHas('category', function ($query) {
+                        $query->where('name', 'LIKE', '%' . $this->search . '%');
+                    })
+                    ->latest('id')
+                    ->paginate(10);
+        $categorias = Category::all();
+        return view('livewire.product-main', compact('productos', 'categorias'));
     }
 
-    public function create(){
-        $this->isOpen=true;
+    public function create()
+    {
+        $this->isOpen = true;
         $this->form->reset();
         $this->reset(['product']);
         $this->resetValidation();
-        //$this->form->mount($this->supplier_id);
     }
 
-    public function edit(Product $product){
-        //dd($vehicle);
-        $this->product=$product;
+    public function edit(Product $product)
+    {
+        $this->product = $product;
         $this->form->fill($product);
-        $this->isOpen=true;
+        $this->isOpen = true;
         $this->resetValidation();
     }
 
-    public function store(){
+    public function store()
+    {
         $this->validate();
-        if(!isset($this->product->id)){
+        if (!isset($this->product->id)) {
             Product::create($this->form->all());
             $this->dialog()->success(
                 $title = 'Mensaje del sistema',
                 $description = 'Registro creado'
             );
-        }else{
+        } else {
             $this->product->update($this->form->all());
             $this->dialog()->success(
                 $title = 'Mensaje del sistema',
@@ -60,12 +66,23 @@ class ProductMain extends Component
         $this->reset(['isOpen']);
     }
 
-    public function destroy(Product $product){
+    public function destroy(Product $product)
+    {
         $product->delete();
     }
 
-    public function updatingSearch(){
+    public function updatingSearch()
+    {
         $this->resetPage();
     }
 
+    public function increaseStock($productId, $amount)
+    {
+        $product = Product::find($productId);
+
+        if ($product && is_numeric($amount) && $amount > 0) {
+            $product->stock += $amount;
+            $product->save();
+        }
+    }
 }

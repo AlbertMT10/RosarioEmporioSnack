@@ -8,9 +8,7 @@
     <div class="my-2 md:mr-2 md:mb-0 w-full">
         <x-input wire:model="form.price" label="Precio del producto" type="number" step="0.01"/>
     </div>
-    <div class="my-2 md:mr-2 md:mb-0 w-full">
-        <x-input wire:model="form.stock" label="Stock disponible" type="number" min="0"/>
-    </div>
+
     <div class="grid sm:grid-cols-8 gap-2">
         <x-native-select label="Seleccione la Categoria" wire:model.live="form.category_id">
             <option>Seleccione opción</option>

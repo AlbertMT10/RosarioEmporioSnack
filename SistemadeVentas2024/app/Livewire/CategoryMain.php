@@ -60,7 +60,8 @@ class CategoryMain extends Component
         $this->reset(['isOpen']);
     }
 
-    public function destroy(Category $category){
+    public function destroy(Category $category)
+    {
         $category->delete();
     }
 

@@ -17,20 +17,7 @@
 <div class="text-center p-10">
     <h1 class="font-bold text-4xl mb-4">Productos</h1>
     <h1 class="text-3xl">Avicola Rosario</h1>
-    <div class="mb-4">
-        <x-native-select label="Seleccione al Trabajador" wire:model="selectedWorkerId">
-            <option value="">Seleccione un trabajador</option>
-            @foreach ($workers as $worker)
-                <option value="{{ $worker->id }}">{{ $worker->first_name }}</option>
-            @endforeach
-        </x-native-select>
-    </div>
-    <div class="mb-4">
-        <x-input wire:model="customerName" label="Nombre del Cliente" />
-    </div>
-    <div class="mb-4">
-        <x-input wire:model="customerDNI" label="DNI del Cliente" />
-    </div>
+
 
 </div>
 
@@ -91,7 +78,23 @@
 
                     </div>
 
+
+
                     <div class="bg-white shadow rounded-lg p-4 sm:p-6 xl:p-8">
+                        <div class="mb-4">
+                            <x-native-select label="Seleccione al Trabajador" wire:model="selectedWorkerId">
+                                <option value="">Seleccione un trabajador</option>
+                                @foreach ($workers as $worker)
+                                    <option value="{{ $worker->id }}">{{ $worker->first_name }}</option>
+                                @endforeach
+                            </x-native-select>
+                        </div>
+                        <div class="mb-4">
+                            <x-input wire:model="customerName" label="Nombre del Cliente" />
+                        </div>
+                        <div class="mb-4">
+                            <x-input wire:model="customerDNI" label="DNI del Cliente" />
+                        </div>
                         <div class="mb-4 flex items-center justify-between">
                             <div>
                                 <h3 class="text-xl font-bold text-gray-900 mb-2">Carrito</h3>

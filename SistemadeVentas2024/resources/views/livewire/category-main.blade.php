@@ -8,7 +8,7 @@
                 </a>
 
                 @if($isOpen)
-                    @include('livewire.product-create')
+                    @include('livewire.category-create')
                 @endif
             </div>
             @foreach($categorias as $item)

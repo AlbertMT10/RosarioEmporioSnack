@@ -42,23 +42,27 @@ class CategoryMain extends Component
         $this->resetValidation();
     }
 
-    public function store(){
-        $this->validate();
-        if(!isset($this->category->id)){
-            Category::create($this->form->all());
-            $this->dialog()->success(
-                $title = 'Mensaje del sistema',
-                $description = 'Registro creado'
-            );
-        }else{
-            $this->category->update($this->form->all());
-            $this->dialog()->success(
-                $title = 'Mensaje del sistema',
-                $description = 'Registro actualizado'
-            );
-        }
-        $this->reset(['isOpen']);
+    public function store()
+{
+    $this->validate();
+
+    if (!isset($this->form['id'])) {
+        Product::create($this->form);
+        $this->dialog()->success(
+            $title = 'Mensaje del sistema',
+            $description = 'Producto creado'
+        );
+    } else {
+        $product = Product::findOrFail($this->form['id']);
+        $product->update($this->form);
+        $this->dialog()->success(
+            $title = 'Mensaje del sistema',
+            $description = 'Producto actualizado'
+        );
     }
+
+    $this->reset(['isOpen']);
+}
 
     public function destroy(Category $category)
     {

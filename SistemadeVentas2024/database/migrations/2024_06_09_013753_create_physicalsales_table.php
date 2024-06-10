@@ -16,7 +16,6 @@ return new class extends Migration
             $table->unsignedBigInteger('worker_id'); //quien le vendio
             $table->string('name'); // Nombre del cliente
             $table->string('dni')->nullable(); // DNI del cliente
-            $table->date('sale_date'); // Fecha de la venta
             $table->unsignedBigInteger('product_id'); //producto que compro
             $table->unsignedInteger('quantity'); // Campo para la cantidad de productos vendidos
             $table->decimal('total', 10, 2); // Total de la venta

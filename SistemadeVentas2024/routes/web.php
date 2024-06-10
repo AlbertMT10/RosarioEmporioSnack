@@ -2,6 +2,7 @@
 
 use App\Livewire\CategoryMain;
 use App\Livewire\Dashboard\Main;
+use App\Livewire\PhysicalsaleMain;
 use App\Livewire\ProductMain;
 use Illuminate\Support\Facades\Route;
 
@@ -17,4 +18,5 @@ Route::middleware([
     Route::get('/dashboard',Main::class)->name('dashboard');
     Route::get('/categorias', CategoryMain ::class)->name('categorias');
     Route::get('/almacen', ProductMain ::class)->name('almacen');
+    Route::get('/carrito', PhysicalsaleMain ::class)->name('carrito');
 });

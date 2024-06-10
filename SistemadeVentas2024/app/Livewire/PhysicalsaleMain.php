@@ -18,11 +18,19 @@ class PhysicalsaleMain extends Component
         public $search;
         public $products;
         public $cart = [];
+        public $workers;
+        public $selectedWorkerId;
+        public $customerName;
+        public $customerDNI;
+        public $total; // Define la variable $total aquí
 
         public function mount()
         {
             $this->products = Product::all();
+            $this->workers = Worker::all();
+            $this->updateTotal(); // Llama al método para calcular el total al inicio
         }
+
 
         public function addToCart($productId)
         {
@@ -36,7 +44,10 @@ class PhysicalsaleMain extends Component
             } else {
                 $this->cart[$productId]['quantity']++;
             }
+
+            $this->updateTotal();
         }
+
 
         public function removeFromCart($productId)
         {
@@ -46,52 +57,43 @@ class PhysicalsaleMain extends Component
                 } else {
                     unset($this->cart[$productId]);
                 }
+
+                $this->updateTotal();
             }
         }
 
-        public function getTotalProperty()
-        {
-            $total = 0;
-
-            foreach ($this->cart as $item) {
-                $total += $item['product']->price * $item['quantity'];
-            }
-
-            return $total;
-        }
-
-        public function render()
-        {
-            $products = Product::where('name', 'LIKE', '%' . $this->search . '%')
-                                ->latest('id')
-                                ->paginate(10);
-
-            return view('livewire.physicalsale-main', [
-                'total' => $this->total,
-                'products' => $products
-            ]);
-        }
-
-        public function saveCart()
-{
-    // Aquí puedes agregar la lógica para guardar el carrito en la base de datos o realizar cualquier otra acción necesaria
-
-    // Por ejemplo, podrías guardar los elementos del carrito en la base de datos
-    foreach ($this->cart as $productId => $item) {
-        $physicalSale = new Physicalsale();
-        $physicalSale->product_id = $productId;
-        $physicalSale->quantity = $item['quantity'];
-        $physicalSale->save();
+        public function updateTotal()
+    {
+        $this->total = collect($this->cart)->sum(function ($item) {
+            return $item['product']->price * $item['quantity'];
+        });
     }
 
-    // Después de guardar el carrito, puedes limpiarlo si es necesario
-    $this->cart = [];
+        public function saveCart()
+        {
+            if (empty($this->selectedWorkerId)) {
+                $this->dialog()->error('Por favor, seleccione un trabajador.');
+                return;
+            }
 
-    // Puedes agregar aquí cualquier otra lógica que necesites después de guardar el carrito
+            if (empty($this->customerDNI)) {
+                $this->dialog()->error('Por favor, ingrese el DNI del cliente.');
+                return;
+            }
 
-    // Finalmente, puedes agregar un mensaje de sesión para indicar que el carrito se ha guardado correctamente
-    session()->flash('success', 'El carrito se ha guardado correctamente.');
-}
+            foreach ($this->cart as $productId => $item) {
+                $physicalSale = new Physicalsale();
+                $physicalSale->product_id = $productId;
+                $physicalSale->quantity = $item['quantity'];
+                $physicalSale->worker_id = $this->selectedWorkerId;
+                $physicalSale->name = $this->customerName;
+                $physicalSale->dni = $this->customerDNI;
+                $physicalSale->total = $this->total;
+                $physicalSale->save();
+            }
 
+            $this->cart = [];
 
-}
+            session()->flash('success', 'El carrito se ha guardado correctamente.');
+        }
+    }

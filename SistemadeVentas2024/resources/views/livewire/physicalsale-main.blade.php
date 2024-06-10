@@ -17,7 +17,20 @@
 <div class="text-center p-10">
     <h1 class="font-bold text-4xl mb-4">Productos</h1>
     <h1 class="text-3xl">Avicola Rosario</h1>
-    <x-input icon="search" placeholder="Buscar producto" wire:model="search"/>
+    <div class="mb-4">
+        <x-native-select label="Seleccione al Trabajador" wire:model="selectedWorkerId">
+            <option value="">Seleccione un trabajador</option>
+            @foreach ($workers as $worker)
+                <option value="{{ $worker->id }}">{{ $worker->first_name }}</option>
+            @endforeach
+        </x-native-select>
+    </div>
+    <div class="mb-4">
+        <x-input wire:model="customerName" label="Nombre del Cliente" />
+    </div>
+    <div class="mb-4">
+        <x-input wire:model="customerDNI" label="DNI del Cliente" />
+    </div>
 
 </div>
 
@@ -60,8 +73,7 @@
 
 <!-- credit -->
 <div class="text-center py-10 px-10">
-    <h2 class="font-bold text-2xl md:text-4xl mb-4">Thanks to <a href="https://unsplash.com/@nixcreative"
-            class="underline font-black">Tyler Nix</a> for those AMAZING product images!</h2>
+    <h2 class="font-bold text-2xl md:text-4xl mb-4">Mas Productos Mas Informacion</h2>
 </div>
 
 
@@ -78,6 +90,7 @@
                         {{-- fin --}}
 
                     </div>
+
                     <div class="bg-white shadow rounded-lg p-4 sm:p-6 xl:p-8">
                         <div class="mb-4 flex items-center justify-between">
                             <div>
@@ -91,26 +104,10 @@
                         </div>
 
                         <ul>
-                            <form wire:submit.prevent="submitForm">
-                                <div class="mb-4">
-                                    <label for="worker_id" class="block text-sm font-medium text-gray-700">ID del trabajador</label>
-                                    <input type="number" id="worker_id" wire:model="worker_id" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-                                </div>
-                                <div class="mb-4">
-                                    <label for="name" class="block text-sm font-medium text-gray-700">Nombre del cliente</label>
-                                    <input type="text" id="name" wire:model="name" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-                                </div>
-                                <div class="mb-4">
-                                    <label for="dni" class="block text-sm font-medium text-gray-700">DNI del cliente</label>
-                                    <input type="text" id="dni" wire:model="dni" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-                                </div>
-                                <div class="mt-4">
-                                    <button type="submit" class="inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                                        Guardar
-                                    </button>
-                                </div>
+
 
                             @foreach ($cart as $item)
+
                             <li class="flex justify-between items-center border-b border-gray-200 py-2">
                                 <span>{{ $item['product']->name }}</span>
                                 <span>${{ number_format($item['product']->price * $item['quantity'], 2) }}</span>
@@ -121,13 +118,15 @@
                                 </div>
                             </li>
                             @endforeach
-                        </form>
+
                         </ul>
+
                         <div class="mt-8">
                             <h3 class="text-xl font-bold">Total: ${{ number_format($total, 2) }}</h3>
                         </div>
                     </div>
-                    </div>
+
+
 
 
 
